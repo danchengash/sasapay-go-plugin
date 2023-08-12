@@ -42,5 +42,5 @@ type B2BResponse struct {
 	ConversationID           string `json:"ConversationID"`
 	OriginatorConversationID string `json:"OriginatorConversationID"`
 	ResponseCode             string `json:"ResponseCode"`
-	ResponseDescription      bool   `json:"ResponseDescription"`
+	ResponseDescription      string `json:"ResponseDescription"`
 }
