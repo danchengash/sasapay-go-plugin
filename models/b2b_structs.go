@@ -18,6 +18,9 @@ type B2BRequest struct {
 	Currency                     string `json:"Currency"`
 	Amount                       int64  `json:"Amount"`
 	ReceiverMerchantCode         string `json:"ReceiverMerchantCode"`
+	AccountReference             string `json:"AccountReference"`
+	ReceiverAccountType          string `json:"ReceiverAccountType"`
+	NetworkCode                  string `json:"NetworkCode"`
 	CallBackURL                  string `json:"CallBackURL"`
 	Reason                       string `json:"Reason"`
 }
