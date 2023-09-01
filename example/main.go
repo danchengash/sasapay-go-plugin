@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/danchengash/sasapay-go-plugin"
@@ -8,11 +9,17 @@ import (
 )
 
 var clientId = "XXXXXX"
-var clientSecret = "XXXXXXX"
-var sp = sasapay.NewSasaPay(clientId, clientSecret, "1234", int(sasapay.Production), true)
+var clientSecret = "XXXXXXXXXXXXXXXXXXXX"
+var sp = sasapay.NewSasaPay(clientId, clientSecret, "1234", int(sasapay.Production), false)
 
 func main() {
-	TestC2B(&testing.T{})
+	response, err := sp.VerifyTransaction("SPEJZM2W9YRN75M")
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Printf("amount %f", response.Data.TransAmount)
+	}
+
 }
 
 func TestC2B(t *testing.T) {
@@ -81,11 +88,13 @@ func TestCheckTransactioStatus(t *testing.T) {
 }
 
 func TestVerifyTransaction(t *testing.T) {
-	response, err := sp.VerifyTransaction("CDKQYQHMD")
+	response, err := sp.VerifyTransaction("SPEJZM2W9YRN75M")
 	if err != nil {
 		t.Error(err)
+	} else {
+		t.Log(response.Data)
+
 	}
-	t.Log(response.Data)
 }
 
 func TestMerchantBalance(t *testing.T) {

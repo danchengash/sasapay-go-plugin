@@ -19,16 +19,16 @@ type VerifyTransactionResponse struct {
 }
 
 type DataVerify struct {
-	TransactionType   string `json:"TransactionType"`
-	TransID           string `json:"TransID"`
-	TransTime         string `json:"TransTime"`
-	TransAmount       string `json:"TransAmount"`
-	MerchantCode      string `json:"MerchantCode"`
-	BillRefNumber     string `json:"BillRefNumber"`
-	InvoiceNumber     string `json:"InvoiceNumber"`
-	OrgAccountBalance string `json:"OrgAccountBalance"`
-	CustomerMobile    string `json:"CustomerMobile"`
-	FirstName         string `json:"FirstName"`
-	MiddleName        string `json:"MiddleName"`
-	LastName          string `json:"LastName"`
+	TransactionType   string  `json:"TransactionType"`
+	TransID           string  `json:"TransID"`
+	TransTime         string  `json:"TransTime"`
+	TransAmount       float64 `json:"TransAmount"`
+	MerchantCode      string  `json:"MerchantCode"`
+	BillRefNumber     string  `json:"BillRefNumber"`
+	InvoiceNumber     string  `json:"InvoiceNumber"`
+	OrgAccountBalance float64 `json:"OrgAccountBalance"`
+	CustomerMobile    string  `json:"CustomerMobile"`
+	FirstName         string  `json:"FirstName"`
+	MiddleName        string  `json:"MiddleName"`
+	LastName          string  `json:"LastName"`
 }
