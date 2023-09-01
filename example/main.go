@@ -9,7 +9,7 @@ import (
 )
 
 var clientId = "XXXXXX"
-var clientSecret = "XXXXXXXXXXXXXXXXXXXX"
+var clientSecret = "XXXXXXXXXXXXXXXxxxxXXXXX"
 var sp = sasapay.NewSasaPay(clientId, clientSecret, "1234", int(sasapay.Production), false)
 
 func main() {
