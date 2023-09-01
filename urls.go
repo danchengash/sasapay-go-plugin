@@ -12,4 +12,5 @@ const (
 	check_merchant_balance   = "payments/check-balance/?MerchantCode="
 	business2Beneficiary     = "payments/b2c/beneficiary/"
 	accountValidation        = "accounts/account-validation/"
+	transactionsUrl = "transactions/?merchant_code="
 )

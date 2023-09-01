@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
 	"github.com/danchengash/sasapay-go-plugin/helpers"
 	"github.com/danchengash/sasapay-go-plugin/models"
 )
@@ -364,6 +365,32 @@ func (s *SasaPay) AccountValidate(acct string, channel string) (*models.AccountV
 		return nil, errors.New(errRespose.Detail)
 	}
 	response, err := models.UnmarshalAccountValidationRes(resp.Body())
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+func (s *SasaPay) GetTransactions(page int, pageSize int) (*models.TransactionsResponse, error) {
+	token, err := s.setAccessToken()
+	if err != nil {
+		return nil, err
+	}
+	headers := make(map[string]string)
+	headers["Authorization"] = "Bearer " + token
+	url := s.baseURL() + transactionsUrl + s.MerchantCode + fmt.Sprintf("&page=%d&page_size=%d", page, pageSize)
+
+	resp, err := helpers.NewReq(url, nil, &headers, s.Showlogs)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() != 200 {
+		errRespose, err := models.UnmarshalAPIRespSecond(resp.Body())
+		if err != nil {
+			return nil, errors.New(string(resp.Body()))
+		}
+		return nil, errors.New(errRespose.Message)
+	}
+	response, err := models.UnmarshalTransactionsResponse(resp.Body())
 	if err != nil {
 		return nil, err
 	}

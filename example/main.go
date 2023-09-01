@@ -8,18 +8,26 @@ import (
 	"github.com/danchengash/sasapay-go-plugin/models"
 )
 
-var clientId = "XXXXXX"
-var clientSecret = "XXXXXXXXXXXXXXXxxxxXXXXX"
-var sp = sasapay.NewSasaPay(clientId, clientSecret, "1234", int(sasapay.Production), false)
+var clientId = "XXXXX"
+var clientSecret = "XXX"
+var sp = sasapay.NewSasaPay(clientId, clientSecret, "XXXX", int(sasapay.Production), true)
 
 func main() {
-	response, err := sp.VerifyTransaction("SPEJZM2W9YRN75M")
+	// response, err := sp.VerifyTransaction("SPEJZM2W9YRN75M")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// } else {
+	// 	fmt.Print("amount %f", response.Data.TransAmount)
+	// }
+
+	res, err := sp.GetTransactions(2, 2)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Printf("amount %f", response.Data.TransAmount)
+		for _, v := range res.Data.Transactions {
+			fmt.Printf("%f - %f \n", v.TransactionAmount, v.TransactionCharges)
+		}
 	}
-
 }
 
 func TestC2B(t *testing.T) {

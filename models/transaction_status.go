@@ -1,4 +1,5 @@
 package models
+
 import "encoding/json"
 
 func UnmarshalTransactionStatusResponse(data []byte) (TransactionStatusResponse, error) {
