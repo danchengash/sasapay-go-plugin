@@ -13,12 +13,6 @@ var clientSecret = "XXX"
 var sp = sasapay.NewSasaPay(clientId, clientSecret, "XXXX", int(sasapay.Production), true)
 
 func main() {
-	// response, err := sp.VerifyTransaction("SPEJZM2W9YRN75M")
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// } else {
-	// 	fmt.Print("amount %f", response.Data.TransAmount)
-	// }
 
 	res, err := sp.GetTransactions(2, 2)
 	if err != nil {

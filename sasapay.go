@@ -371,6 +371,7 @@ func (s *SasaPay) AccountValidate(acct string, channel string) (*models.AccountV
 	return &response, nil
 }
 func (s *SasaPay) GetTransactions(page int, pageSize int) (*models.TransactionsResponse, error) {
+	
 	token, err := s.setAccessToken()
 	if err != nil {
 		return nil, err
