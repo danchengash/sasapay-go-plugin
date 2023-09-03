@@ -12,6 +12,8 @@ var clientId = "XXXXX"
 var clientSecret = "XXX"
 var sp = sasapay.NewSasaPay(clientId, clientSecret, "XXXX", int(sasapay.Production), true)
 
+
+
 func main() {
 
 	res, err := sp.GetTransactions(2, 2)
