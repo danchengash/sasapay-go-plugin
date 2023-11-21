@@ -8,22 +8,35 @@ import (
 	"github.com/danchengash/sasapay-go-plugin/models"
 )
 
-var clientId = "XXXXX"
-var clientSecret = "XXX"
-var sp = sasapay.NewSasaPay(clientId, clientSecret, "XXXX", int(sasapay.Production), true)
-
-
+var clientId = "XXX"
+var clientSecret = "XXXXX"
+var sp = sasapay.NewSasaPay(clientId, clientSecret, "XXX", int(sasapay.Production), true)
 
 func main() {
+	res, _ := sp.CardPayment(models.CardPaymentRequest{
 
-	res, err := sp.GetTransactions(2, 2)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		for _, v := range res.Data.Transactions {
-			fmt.Printf("%f - %f \n", v.TransactionAmount, v.TransactionCharges)
-		}
-	}
+		MerchantCode:         sp.MerchantCode,
+		Amount:               "100",
+		Reference:            "677",
+		Description:          "dtests",
+		Currency:             "KES",
+		CallbackURL:          "https://c6d5-41-90-115-26.ngrok-free.app",
+		SuccessURL:           "",
+		FailureURL:           "",
+		SasaPayWalletEnabled: true,
+		MpesaEnabled:         false,
+		CardEnabled:          true,
+		AirtelEnabled:        false,
+	})
+	fmt.Println(res.CheckoutURL)
+	// res, err := sp.GetTransactions(1, 2, "2023-2-23", "2023-10-28")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// } else {
+	// 	for _, v := range res.Data.Transactions {
+	// 		fmt.Printf("%f - %f \n", v.TransactionAmount, v.TransactionCharges)
+	// 	}
+	// }
 }
 
 func TestC2B(t *testing.T) {

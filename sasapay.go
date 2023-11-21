@@ -370,15 +370,15 @@ func (s *SasaPay) AccountValidate(acct string, channel string) (*models.AccountV
 	}
 	return &response, nil
 }
-func (s *SasaPay) GetTransactions(page int, pageSize int) (*models.TransactionsResponse, error) {
-	
+func (s *SasaPay) GetTransactions(page int, pageSize int, startEndate string, endDate string) (*models.TransactionsResponse, error) {
+
 	token, err := s.setAccessToken()
 	if err != nil {
 		return nil, err
 	}
 	headers := make(map[string]string)
 	headers["Authorization"] = "Bearer " + token
-	url := s.baseURL() + transactionsUrl + s.MerchantCode + fmt.Sprintf("&page=%d&page_size=%d", page, pageSize)
+	url := s.baseURL() + transactionsUrl + s.MerchantCode + fmt.Sprintf("&page=%d&page_size=%d&start_date=%s&end_date=%s", page, pageSize, startEndate, endDate)
 
 	resp, err := helpers.NewReq(url, nil, &headers, s.Showlogs)
 	if err != nil {
@@ -392,6 +392,33 @@ func (s *SasaPay) GetTransactions(page int, pageSize int) (*models.TransactionsR
 		return nil, errors.New(errRespose.Message)
 	}
 	response, err := models.UnmarshalTransactionsResponse(resp.Body())
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+func (s *SasaPay) CardPayment(param models.CardPaymentRequest) (*models.CardPaymentResponse, error) {
+	token, err := s.setAccessToken()
+	if err != nil {
+		return nil, err
+	}
+	headers := make(map[string]string)
+	headers["Authorization"] = "Bearer " + token
+	url := s.baseURL() + cardPaymentUrl
+	paramsBytes, _ := param.Marshal()
+	resp, err := helpers.NewReq(url, &paramsBytes, &headers, s.Showlogs)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() != 200 {
+		errRespose, err := models.UnmarshalAPIResponse(resp.Body())
+		if err != nil {
+			return nil, errors.New(string(resp.Body()))
+		}
+		return nil, errors.New(errRespose.Detail)
+	}
+	response, err := models.UnmarshalCardPaymentResponse(resp.Body())
 	if err != nil {
 		return nil, err
 	}
