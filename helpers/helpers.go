@@ -4,20 +4,19 @@ import (
 	"crypto/tls"
 	"fmt"
 	"time"
-
 	"github.com/valyala/fasthttp"
 )
 
 var contentyTypeHeaderJson = []byte("application/json")
 
 func NewReq(url string, body *[]byte, headers *map[string]string, debug ...bool) (*fasthttp.Response, error) {
-	readTimeout, _ := time.ParseDuration("15s")
-	writeTimeout, _ := time.ParseDuration("15s")
+	readTimeout, _ := time.ParseDuration("1m")
+	writeTimeout, _ := time.ParseDuration("1m")
 	maxIdleConnDuration, _ := time.ParseDuration("30m")
 	tlsConf := &tls.Config{InsecureSkipVerify: true}
 	dial := (&fasthttp.TCPDialer{Concurrency: 100, DNSCacheDuration: time.Hour}).Dial
 	client := fasthttp.Client{
-		Name:                          "sasapay-sdk",
+		Name:                          "sasapay",
 		ReadTimeout:                   readTimeout,
 		WriteTimeout:                  writeTimeout,
 		MaxIdleConnDuration:           maxIdleConnDuration,

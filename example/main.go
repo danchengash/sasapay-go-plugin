@@ -9,26 +9,27 @@ import (
 )
 
 var clientId = "XXX"
-var clientSecret = "XXXXX"
+var clientSecret = "XXX"
 var sp = sasapay.NewSasaPay(clientId, clientSecret, "XXX", int(sasapay.Production), true)
 
 func main() {
-	res, _ := sp.CardPayment(models.CardPaymentRequest{
+	TestB2B(&testing.T{})
+	// res, _ := sp.CardPayment(models.CardPaymentRequest{
 
-		MerchantCode:         sp.MerchantCode,
-		Amount:               "100",
-		Reference:            "677",
-		Description:          "dtests",
-		Currency:             "KES",
-		CallbackURL:          "https://c6d5-41-90-115-26.ngrok-free.app",
-		SuccessURL:           "",
-		FailureURL:           "",
-		SasaPayWalletEnabled: true,
-		MpesaEnabled:         false,
-		CardEnabled:          true,
-		AirtelEnabled:        false,
-	})
-	fmt.Println(res.CheckoutURL)
+	// 	MerchantCode:         sp.MerchantCode,
+	// 	Amount:               "100",
+	// 	Reference:            "677",
+	// 	Description:          "dtests",
+	// 	Currency:             "KES",
+	// 	CallbackURL:          "https://c6d5-41-90-115-26.ngrok-free.app",
+	// 	SuccessURL:           "",
+	// 	FailureURL:           "",
+	// 	SasaPayWalletEnabled: true,
+	// 	MpesaEnabled:         false,
+	// 	CardEnabled:          true,
+	// 	AirtelEnabled:        false,
+	// })
+	// fmt.Println(res.CheckoutURL)
 	// res, err := sp.GetTransactions(1, 2, "2023-2-23", "2023-10-28")
 	// if err != nil {
 	// 	fmt.Println(err.Error())
@@ -83,17 +84,21 @@ func TestB2c(t *testing.T) {
 func TestB2B(t *testing.T) {
 	response, err := sp.Business2Business(models.B2BRequest{
 		MerchantCode:                 sp.MerchantCode,
-		MerchantTransactionReference: "uoiwp",
+		NetworkCode:                  "0",
+		AccountReference:             "ref00",
+		ReceiverAccountType:          "TILL",
+		MerchantTransactionReference: "uoiwp10",
 		Currency:                     "KES",
-		Amount:                       1,
-		ReceiverMerchantCode:         "94000",
-		CallBackURL:                  "https://posthere.io/67df-4d9c-9386",
+		Amount:                       50,
+		ReceiverMerchantCode:         "555550",
+		CallBackURL:                  "https://webhook.site/e8afa636-daed-49fa-bc1b-aeb9e607955f",
 		Reason:                       "test",
 	})
 	if err != nil {
-		t.Error(err)
+		fmt.Printf("error ==> %s", err.Error())
 	}
-	t.Log(response.Detail)
+	fmt.Println(response.Detail)
+
 }
 
 func TestCheckTransactioStatus(t *testing.T) {
