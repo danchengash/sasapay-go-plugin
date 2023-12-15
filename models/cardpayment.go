@@ -22,6 +22,7 @@ type CardPaymentRequest struct {
 	MerchantCode         string `json:"MerchantCode"`
 	Amount               string `json:"Amount"`
 	Reference            string `json:"Reference"`
+	PayerEmail           string `json:"PayerEmail"`
 	Description          string `json:"Description"`
 	Currency             string `json:"Currency"`
 	CallbackURL          string `json:"CallbackUrl"`
@@ -32,8 +33,6 @@ type CardPaymentRequest struct {
 	CardEnabled          bool   `json:"CardEnabled"`
 	AirtelEnabled        bool   `json:"AirtelEnabled"`
 }
-
-
 
 func UnmarshalCardPaymentResponse(data []byte) (CardPaymentResponse, error) {
 	var r CardPaymentResponse
