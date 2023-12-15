@@ -19,6 +19,7 @@ func (r *CardPaymentRequest) Marshal() ([]byte, error) {
 }
 
 type CardPaymentRequest struct {
+	
 	MerchantCode         string `json:"MerchantCode"`
 	Amount               string `json:"Amount"`
 	Reference            string `json:"Reference"`
