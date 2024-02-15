@@ -23,7 +23,7 @@ type Data struct {
 	TransactionDate           string  `json:"TransactionDate"`
 	CheckoutID                string  `json:"CheckoutId"`
 	MerchantReference         string  `json:"MerchantReference"`
-	TransactionAmount         int64   `json:"TransactionAmount"`
+	TransactionAmount         float64 `json:"TransactionAmount"`
 	Paid                      bool    `json:"Paid"`
 	AmountPaid                float64 `json:"AmountPaid"`
 	PaidDate                  string  `json:"PaidDate"`
