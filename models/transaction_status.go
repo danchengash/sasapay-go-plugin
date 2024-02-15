@@ -19,13 +19,17 @@ type TransactionStatusResponse struct {
 }
 
 type Data struct {
-	TransactionType    string `json:"TransactionType"`
-	TransactionDate    string `json:"TransactionDate"`
-	CheckoutID         string `json:"CheckoutId"`
-	TransactionAmount  int64  `json:"TransactionAmount"`
-	Paid               bool   `json:"Paid"`
-	AmountPaid         int64  `json:"AmountPaid"`
-	PaidDate           string `json:"PaidDate"`
-	SourceChannel      string `json:"SourceChannel"`
-	DestinationChannel string `json:"DestinationChannel"`
+	TransactionType           string  `json:"TransactionType"`
+	TransactionDate           string  `json:"TransactionDate"`
+	CheckoutID                string  `json:"CheckoutId"`
+	MerchantReference         string  `json:"MerchantReference"`
+	TransactionAmount         int64   `json:"TransactionAmount"`
+	Paid                      bool    `json:"Paid"`
+	AmountPaid                float64 `json:"AmountPaid"`
+	PaidDate                  string  `json:"PaidDate"`
+	SourceChannel             string  `json:"SourceChannel"`
+	DestinationChannel        string  `json:"DestinationChannel"`
+	TransID                   string  `json:"TransID"`
+	TransactionCode           string  `json:"TransactionCode"`
+	ThirdPartyTransactionCode string  `json:"ThirdPartyTransactionCode"`
 }
