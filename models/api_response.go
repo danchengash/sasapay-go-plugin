@@ -13,11 +13,10 @@ func (r *APIResponse) Marshal() ([]byte, error) {
 }
 
 type APIResponse struct {
-	Status bool   `json:"status"`
-	Detail string `json:"detail"`
-
+	Status  bool   `json:"status"`
+	Detail  string `json:"detail"`
+	Message string `json:"message"`
 }
-
 
 func UnmarshalAPIRespSecond(data []byte) (APIRespSecond, error) {
 	var r APIRespSecond

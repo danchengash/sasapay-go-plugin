@@ -33,3 +33,21 @@ type Data struct {
 	TransactionCode           string  `json:"TransactionCode"`
 	ThirdPartyTransactionCode string  `json:"ThirdPartyTransactionCode"`
 }
+
+
+func UnmarshalCheckTransactionStatusRequest(data []byte) (CheckTransactionStatusRequest, error) {
+	var r CheckTransactionStatusRequest
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *CheckTransactionStatusRequest) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type CheckTransactionStatusRequest struct {
+	MerchantCode                 string `json:"MerchantCode"`
+	CheckoutRequestID            string `json:"CheckoutRequestId"`
+	MerchantTransactionReference string `json:"MerchantTransactionReference"`
+	TransactionCode              string `json:"TransactionCode"`
+}

@@ -8,12 +8,14 @@ import (
 	"github.com/danchengash/sasapay-go-plugin/models"
 )
 
-var clientId = "XXX"
-var clientSecret = "XXX"
-var sp = sasapay.NewSasaPay(clientId, clientSecret, "XXX", int(sasapay.Production), true)
+var clientSecret = "XXXXX"
+var clientId = "XX"
+var sp = sasapay.NewSasaPay(clientId, clientSecret, "XX", int(sasapay.Production), true)
 
 func main() {
-	TestB2B(&testing.T{})
+	sp = sasapay.NewSasaPay(clientId, clientSecret, "XX", int(sasapay.Production), true)
+
+	TestCheckTransactioStatus(&testing.T{})
 	// res, _ := sp.CardPayment(models.CardPaymentRequest{
 
 	// 	MerchantCode:         sp.MerchantCode,
@@ -102,7 +104,7 @@ func TestB2B(t *testing.T) {
 }
 
 func TestCheckTransactioStatus(t *testing.T) {
-	response, err := sp.CheckTransactionStatus("6e1e251f-afb0-****-a097-f1ae0e0b2ce6")
+	response, err := sp.CheckTransactionStatus(models.CheckTransactionStatusRequest{CheckoutRequestID: "XXXXX", MerchantTransactionReference: "XXXX", TransactionCode: "SPEJZM2W9YRN75M"})
 	if err != nil {
 		t.Error(err)
 	}

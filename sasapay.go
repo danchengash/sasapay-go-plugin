@@ -58,7 +58,6 @@ func (s *SasaPay) setAccessToken() (string, error) {
 			return "", err
 		}
 	}
-
 	return s.cacheToken.AccessToken, nil
 }
 
@@ -223,7 +222,7 @@ func (s *SasaPay) Business2Business(params models.B2BRequest) (*models.B2BRespon
 	return &response, nil
 }
 
-func (s *SasaPay) CheckTransactionStatus(checkoutRequestId string) (*models.TransactionStatusResponse, error) {
+func (s *SasaPay) CheckTransactionStatus(checkSta models.CheckTransactionStatusRequest) (*models.TransactionStatusResponse, error) {
 	token, err := s.setAccessToken()
 	if err != nil {
 		return nil, err
@@ -231,23 +230,25 @@ func (s *SasaPay) CheckTransactionStatus(checkoutRequestId string) (*models.Tran
 	headers := make(map[string]string)
 	headers["Authorization"] = "Bearer " + token
 	url := s.baseURL() + check_transaction_status
-	params := make(map[string]interface{})
-	params["MerchantCode"] = s.MerchantCode
-	params["CheckoutRequestId"] = checkoutRequestId
-	paramsBytes, _ := json.Marshal(params)
+	checkSta.MerchantCode = s.MerchantCode
+	paramsBytes, _ := checkSta.Marshal()
 	resp, err := helpers.NewReq(url, &paramsBytes, &headers, s.Showlogs)
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode() != 200 {
-		if resp.StatusCode() == 400 {
-			return nil, errors.New(string(resp.Body()))
-		}
+		// if resp.StatusCode() == 400 {
+		// 	return nil, errors.New(string(resp.Body()))
+		// }
 		errRespose, err := models.UnmarshalAPIResponse(resp.Body())
 		if err != nil {
-			return nil, errors.New(string(resp.Body()))
+			return nil, fmt.Errorf("%s-%s", err.Error(), resp.Body())
 		}
-		return nil, errors.New(errRespose.Detail)
+		if errRespose.Detail == "" {
+			return nil, errors.New(errRespose.Message)
+		} else {
+			return nil, errors.New(errRespose.Detail)
+		}
 	}
 	response, err := models.UnmarshalTransactionStatusResponse(resp.Body())
 	if err != nil {
