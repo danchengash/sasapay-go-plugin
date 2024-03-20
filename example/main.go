@@ -8,8 +8,8 @@ import (
 	"github.com/danchengash/sasapay-go-plugin/models"
 )
 
-var clientSecret = "XX"
-var clientId = "XX"
+var clientSecret = "XXX"
+var clientId = "XXXXX"
 var sp = sasapay.NewSasaPay(clientId, clientSecret, "XX", int(sasapay.Production), true)
 
 func main() {
