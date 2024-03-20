@@ -8,12 +8,12 @@ import (
 	"github.com/danchengash/sasapay-go-plugin/models"
 )
 
-var clientSecret = "XXXXX"
+var clientSecret = "XX"
 var clientId = "XX"
 var sp = sasapay.NewSasaPay(clientId, clientSecret, "XX", int(sasapay.Production), true)
 
 func main() {
-	sp = sasapay.NewSasaPay(clientId, clientSecret, "XX", int(sasapay.Production), true)
+	sp = sasapay.NewSasaPay(clientId, clientSecret, "XXX", int(sasapay.Production), true)
 
 	TestCheckTransactioStatus(&testing.T{})
 	// res, _ := sp.CardPayment(models.CardPaymentRequest{
@@ -104,11 +104,16 @@ func TestB2B(t *testing.T) {
 }
 
 func TestCheckTransactioStatus(t *testing.T) {
-	response, err := sp.CheckTransactionStatus(models.CheckTransactionStatusRequest{CheckoutRequestID: "XXXXX", MerchantTransactionReference: "XXXX", TransactionCode: "SPEJZM2W9YRN75M"})
+	// pa := models.CheckTransactionStatusRequest{CheckoutRequestID: nil, CallBackUrl: "https://webhook.site/dbeae6a3-9525-42ee-be21-3a9c3c29725e"}
+	pa := models.CheckTransactionStatusRequest{CheckoutRequestID: nil}
+
+	re := "R5MeZj_S_1218"
+	pa.MerchantTransactionReference = &re
+	response, err := sp.CheckTransactionStatus(pa)
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log(response.Data)
+	t.Log(response.Data.ResultDescription)
 }
 
 func TestVerifyTransaction(t *testing.T) {

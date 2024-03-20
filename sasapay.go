@@ -228,10 +228,22 @@ func (s *SasaPay) CheckTransactionStatus(checkSta models.CheckTransactionStatusR
 		return nil, err
 	}
 	headers := make(map[string]string)
+	params := make(map[string]interface{})
+
 	headers["Authorization"] = "Bearer " + token
 	url := s.baseURL() + check_transaction_status
+	if checkSta.CallBackUrl != "" {
+		url = s.baseURL() + check_transaction_status_query
+		params["CallBackUrl"] = checkSta.CallBackUrl
+	}
 	checkSta.MerchantCode = s.MerchantCode
-	paramsBytes, _ := checkSta.Marshal()
+	if checkSta.CheckoutRequestID != nil {
+		params["CheckoutRequestId"] = checkSta.CheckoutRequestID
+	}
+	params["MerchantCode"] = s.MerchantCode
+	params["MerchantTransactionReference"] = checkSta.MerchantTransactionReference
+	params["TransactionCode"] = checkSta.TransactionCode
+	paramsBytes, _ := json.Marshal(params)
 	resp, err := helpers.NewReq(url, &paramsBytes, &headers, s.Showlogs)
 	if err != nil {
 		return nil, err

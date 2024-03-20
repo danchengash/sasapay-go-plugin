@@ -32,8 +32,9 @@ type Data struct {
 	TransID                   string  `json:"TransID"`
 	TransactionCode           string  `json:"TransactionCode"`
 	ThirdPartyTransactionCode string  `json:"ThirdPartyTransactionCode"`
+	ResultCode                string  `json:"ResultCode,omitempty" bson:"result_code"`
+	ResultDescription         string  `json:"ResultDescription,omitempty" bson:"result_description"`
 }
-
 
 func UnmarshalCheckTransactionStatusRequest(data []byte) (CheckTransactionStatusRequest, error) {
 	var r CheckTransactionStatusRequest
@@ -46,8 +47,9 @@ func (r *CheckTransactionStatusRequest) Marshal() ([]byte, error) {
 }
 
 type CheckTransactionStatusRequest struct {
-	MerchantCode                 string `json:"MerchantCode"`
-	CheckoutRequestID            string `json:"CheckoutRequestId"`
-	MerchantTransactionReference string `json:"MerchantTransactionReference"`
-	TransactionCode              string `json:"TransactionCode"`
+	MerchantCode                 string  `json:"MerchantCode"`
+	CheckoutRequestID            *string `json:"CheckoutRequestId"`
+	MerchantTransactionReference *string `json:"MerchantTransactionReference"`
+	TransactionCode              *string `json:"TransactionCode"`
+	CallBackUrl                  string  `json:"CallBackUrl,omitempty" bson:"call_back_url"`
 }
