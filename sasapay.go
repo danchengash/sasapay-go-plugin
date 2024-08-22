@@ -234,7 +234,7 @@ func (s *SasaPay) CheckTransactionStatus(checkSta models.CheckTransactionStatusR
 	url := s.baseURL() + check_transaction_status
 	if checkSta.CallBackUrl != "" {
 		url = s.baseURL() + check_transaction_status_query
-		params["CallBackUrl"] = checkSta.CallBackUrl
+		params["CallbackUrl"] = checkSta.CallBackUrl
 	}
 	checkSta.MerchantCode = s.MerchantCode
 	if checkSta.CheckoutRequestID != nil {
