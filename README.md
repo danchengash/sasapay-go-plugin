@@ -7,7 +7,7 @@ A golang wrapper aroung sasapay API'S
 To download the package
 ```go
 
-go get github.com/danchengash/sasapay-go-sdk@latest
+go get github.com/danchengash/sasapay-go-plugin@latest
 
 ```
  
