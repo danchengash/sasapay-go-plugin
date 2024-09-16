@@ -41,7 +41,7 @@ func NewReq(url string, body *[]byte, headers *map[string]string, debug ...bool)
 	if body == nil {
 		req.Header.SetMethod(fasthttp.MethodGet)
 
-	} else if body != nil {
+	} else  {
 		//POST REQUEST
 		req.Header.SetMethod(fasthttp.MethodPost)
 		req.SetBodyRaw(*body)
