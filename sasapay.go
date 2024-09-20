@@ -383,7 +383,7 @@ func (s *SasaPay) AccountValidate(acct string, channel string) (*models.AccountV
 	}
 	return &response, nil
 }
-func (s *SasaPay) GetTransactions(page int, pageSize int, startEndate string, endDate string) (*models.TransactionsResponse, error) {
+func (s *SasaPay) GetTransactions(page int, pageSize int, startEndate string, endDate string, transactionCode string) (*models.TransactionsResponse, error) {
 
 	token, err := s.setAccessToken()
 	if err != nil {
@@ -391,7 +391,7 @@ func (s *SasaPay) GetTransactions(page int, pageSize int, startEndate string, en
 	}
 	headers := make(map[string]string)
 	headers["Authorization"] = "Bearer " + token
-	url := s.baseURL() + transactionsUrl + s.MerchantCode + fmt.Sprintf("&page=%d&page_size=%d&start_date=%s&end_date=%s", page, pageSize, startEndate, endDate)
+	url := s.baseURL() + transactionsUrl + s.MerchantCode + fmt.Sprintf("&page=%d&page_size=%d&start_date=%s&end_date=%s&transaction_code=%s", page, pageSize, startEndate, endDate, transactionCode)
 
 	resp, err := helpers.NewReq(url, nil, &headers, s.Showlogs)
 	if err != nil {
