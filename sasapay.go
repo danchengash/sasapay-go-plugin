@@ -391,8 +391,10 @@ func (s *SasaPay) GetTransactions(page int, pageSize int, startEndate string, en
 	}
 	headers := make(map[string]string)
 	headers["Authorization"] = "Bearer " + token
-	url := s.baseURL() + transactionsUrl + s.MerchantCode + fmt.Sprintf("&page=%d&page_size=%d&start_date=%s&end_date=%s&transaction_code=%s", page, pageSize, startEndate, endDate, transactionCode)
-
+	url := s.baseURL() + transactionsUrl + s.MerchantCode + fmt.Sprintf("&page=%d&page_size=%d&start_date=%s&end_date=%s", page, pageSize, startEndate, endDate)
+	if transactionCode != "" {
+		url = url + fmt.Sprintf("&transaction_code=%s", transactionCode)
+	}
 	resp, err := helpers.NewReq(url, nil, &headers, s.Showlogs)
 	if err != nil {
 		return nil, err
