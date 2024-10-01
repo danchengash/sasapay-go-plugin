@@ -41,7 +41,7 @@ func NewReq(url string, body *[]byte, headers *map[string]string, debug ...bool)
 	if body == nil {
 		req.Header.SetMethod(fasthttp.MethodGet)
 
-	} else  {
+	} else {
 		//POST REQUEST
 		req.Header.SetMethod(fasthttp.MethodPost)
 		req.SetBodyRaw(*body)
@@ -55,7 +55,8 @@ func NewReq(url string, body *[]byte, headers *map[string]string, debug ...bool)
 		if debug[0] {
 			fmt.Printf("-------------REQUEST START------------\n")
 			fmt.Printf("[BODY]: %s\n", req.Body())
-			fmt.Printf("[CODE]: %d\n[RESPONSE]: %s\n", resp.StatusCode(), resp.Body())
+			fmt.Printf("[CODE]: %d\n", resp.StatusCode())
+			fmt.Printf("[RESPONSE]: %s\n", resp.Body())
 			fmt.Printf("-------------REQUEST END------------\n")
 		}
 
