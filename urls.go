@@ -16,4 +16,5 @@ const (
 	accountValidation      = "accounts/account-validation/"
 	transactionsUrl        = "transactions/?merchant_code="
 	cardPaymentUrl         = "payments/card-payments/"
+	getBankList            = "payments/channel-codes/"
 )

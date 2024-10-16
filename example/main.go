@@ -16,7 +16,7 @@ func main() {
 	// sp = sasapay.NewSasaPay(clientId, clientSecret, "XXX", int(sasapay.Production), true)
 	TestTransactionStatement(&testing.T{})
 
-	// TestCheckTransactioStatus(&testing.T{})
+	TestCheckTransactioStatus(&testing.T{})
 	// res, _ := sp.CardPayment(models.CardPaymentRequest{
 
 	// 	MerchantCode:         sp.MerchantCode,
@@ -43,6 +43,10 @@ func main() {
 	// }
 }
 
+func TestGetBanklist(t *testing.T) {
+	sp.GetChannelCodes()
+
+}
 func TestTransactionStatement(t *testing.T) {
 	reponse, err := sp.GetTransactions(1, 2, "2024-2-23", "2024-10-28", "")
 	if err != nil {

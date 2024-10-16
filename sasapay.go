@@ -439,3 +439,33 @@ func (s *SasaPay) CardPayment(param models.CardPaymentRequest) (*models.CardPaym
 	}
 	return &response, nil
 }
+
+func (s *SasaPay) GetChannelCodes() (*[]models.BankList, error) {
+	token, err := s.setAccessToken()
+	if err != nil {
+		return nil, err
+	}
+	headers := make(map[string]string)
+	headers["Authorization"] = "Bearer " + token
+	url := s.baseURL() + getBankList
+	resp, err := helpers.NewReq(url, nil, &headers, s.Showlogs)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() != 200 {
+		errRespose, err := models.UnmarshalAPIResponse(resp.Body())
+		if err != nil {
+			return nil, errors.New(string(resp.Body()))
+		}
+		return nil, errors.New(errRespose.Detail)
+	}
+	response, err := models.UnmarshalBankListResp(resp.Body())
+	if err != nil {
+		return nil, err
+	}
+	if response.Data != nil {
+		return &response.Data, nil
+	}
+	return nil, fmt.Errorf("no bank list")
+
+}
