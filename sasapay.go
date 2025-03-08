@@ -49,7 +49,7 @@ func (s *SasaPay) setAccessToken() (string, error) {
 	res, err := helpers.NewReq(url, nil, &headers, false)
 	if err != nil {
 		fmt.Println(err)
-		return "", &models.RequestError{StatusCode: res.StatusCode(), Message: string(res.Body()), Url: res.LocalAddr().String()}
+		return "", err
 	}
 	if res.StatusCode() >= 200 && res.StatusCode() <= 300 {
 		s.cacheToken, err = models.UnmarshalAccessTokenResponse(res.Body())
@@ -84,7 +84,7 @@ func (s *SasaPay) RegisterCallBackUrl(confirmationUrl string) (*models.RegisterC
 
 	res, err := helpers.NewReq(url, &reqEntityBytes, &headers, s.Showlogs)
 	if err != nil {
-		return nil, &models.RequestError{StatusCode: res.StatusCode(), Message: string(res.Body()), Url: res.LocalAddr().String()}
+		return nil, err
 	}
 	resp, err := models.UnmarshalRegisterConfirmationURLResponse(res.Body())
 	if err != nil {
@@ -439,7 +439,6 @@ func (s *SasaPay) CardPayment(param models.CardPaymentRequest) (*models.CardPaym
 	}
 	return &response, nil
 }
-
 func (s *SasaPay) GetChannelCodes() (*[]models.BankList, error) {
 	token, err := s.setAccessToken()
 	if err != nil {
@@ -466,6 +465,9 @@ func (s *SasaPay) GetChannelCodes() (*[]models.BankList, error) {
 	if response.Data != nil {
 		return &response.Data, nil
 	}
+	return nil, fmt.Errorf("no bank list")
+	return nil, fmt.Errorf("no bank list")
+
 	return nil, fmt.Errorf("no bank list")
 
 }

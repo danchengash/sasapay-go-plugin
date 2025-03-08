@@ -40,30 +40,30 @@ func NewReq(url string, body *[]byte, headers *map[string]string, debug ...bool)
 	//GET REQUEST.
 	if body == nil {
 		req.Header.SetMethod(fasthttp.MethodGet)
-
 	} else {
 		//POST REQUEST
 		req.Header.SetMethod(fasthttp.MethodPost)
 		req.SetBodyRaw(*body)
-	}
-	err := client.Do(req, resp)
-	if err != nil {
-		fmt.Printf("<ERROR ->>: %s\n", err)
-
 	}
 	if len(debug) != 0 {
 		if debug[0] {
 			fmt.Printf("-------------REQUEST START------------\n")
 			fmt.Printf("[URL]: %s\n", req.URI().String())
 			fmt.Printf("[BODY]: %s\n", req.Body())
+		}
+	}
+	err := client.Do(req, resp)
+	if err != nil {
+		fmt.Printf("<ERROR ->>: %s\n", err)
+		return nil, err
+	}
+	if len(debug) != 0 {
+		if debug[0] {
 			fmt.Printf("[CODE]: %d\n", resp.StatusCode())
 			fmt.Printf("[RESPONSE]: %s\n", resp.Body())
 			fmt.Printf("-------------REQUEST END------------\n")
 		}
 
-	}
-	if err != nil {
-		return nil, err
 	}
 
 	// RELEASE RESOURCES.

@@ -44,9 +44,8 @@ type InvalidAccessTokenResponse struct {
 
 type RequestError struct {
 	StatusCode int
-
-	Message string
-	Url     string
+	Message    string
+	Url        string
 }
 
 func (r *RequestError) Error() string {
